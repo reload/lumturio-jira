@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+// The following way to require composers autoload.php is borrowed
+// from https://github.com/sebastianbergmann/phpunit
+foreach ([__DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        define('COMPOSER_INSTALL', $file);
+        break;
+    }
+}
+
+unset($file);
+
+if (!defined('COMPOSER_INSTALL')) {
+    fwrite(
+        STDERR,
+        'You need to set up the project dependencies using Composer:'.PHP_EOL.PHP_EOL.
+        '    composer install'.PHP_EOL.PHP_EOL.
+        'You can learn all about Composer on https://getcomposer.org/.'.PHP_EOL
+    );
+    die(1);
+}
+
+require COMPOSER_INSTALL;
+
+use LumturioJira\JiraIssue;
+use LumturioJira\Lumturio;
+use LumturioJira\SyncCommand;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+$application = new Application('lumturio-jira', '@package_version@');
+$command = new SyncCommand();
+$completion = new CompletionCommand();
+
+$application->add($completion);
+$application->add($command);
+
+$application->setDefaultCommand('sync');
+$application->run();

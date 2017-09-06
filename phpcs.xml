@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="PHP_CodeSniffer">
+  <rule ref="PSR2"/>
+  <file>./src/</file>
+  <file>./tests/</file>
+  <!--Exclude generated code.-->
+  <exclude-pattern>./src/CarDB/Api/</exclude-pattern>
+  <exclude-pattern>./src/UserData/Api/</exclude-pattern>
+  <exclude-pattern>./src/UserTransaction/Api/</exclude-pattern>
+</ruleset>
