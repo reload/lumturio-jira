@@ -98,7 +98,9 @@ class SyncCommand extends Command implements CompletionAwareInterface
             $version
         );
 
-        $this->log($output, "{$site->getHostname()} {$update->getShortName()}:{$version}: ");
+        $timestamp = gmdate(DATE_ATOM);
+
+        $this->log($output, "{$timestamp} - {$site->getHostname()} - {$update->getShortName()}:{$version} - ");
 
         if ($key = $issue->existingIssue()) {
             $this->logLine($output, "Existing issue {$key}.");
@@ -107,7 +109,7 @@ class SyncCommand extends Command implements CompletionAwareInterface
         }
 
         if ($input->getOption('dry-run')) {
-            $this->logLine($output, "Would have created issue in {$project} if not a dry run.");
+            $this->logLine($output, "Would have created an issue in {$project} if not a dry run.");
 
             return;
         }
