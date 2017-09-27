@@ -102,7 +102,15 @@ class SyncCommand extends Command implements CompletionAwareInterface
 
         $this->log($output, "{$timestamp} - {$site->getHostname()} - {$update->getShortName()}:{$version} - ");
 
-        if ($key = $issue->existingIssue()) {
+        try {
+            $key = $issue->existingIssue();
+        } catch (\Throwable $t) {
+            $this->logLine($output, "ERROR ACCESSING JIRA: {$t->getMessage()}.");
+
+            return;
+        }
+
+        if ($key) {
             $this->logLine($output, "Existing issue {$key}.");
 
             return;
