@@ -26,6 +26,11 @@ class LumturioSite
         return $this->data->site_hostname;
     }
 
+    public function getDescription() : string
+    {
+        return $this->data->info_description;
+    }
+
     public function getInfoTags() : array
     {
         return array_map('trim', (array) $this->data->info_tags);

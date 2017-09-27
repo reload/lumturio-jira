@@ -13,6 +13,8 @@ class JiraIssue
 
     protected $hostname;
 
+    protected $description;
+
     protected $project;
 
     protected $module;
@@ -25,6 +27,7 @@ class JiraIssue
     {
         $this->site = $site;
         $this->hostname = $hostname;
+        $this->description = $site->getDescription() ?: $this->hostname;
         $this->project = $project;
         $this->module = $module;
         $this->version = $version;
@@ -86,7 +89,7 @@ EOT;
 
 * Security update: [{$this->version}|https://www.drupal.org/project/{$this->module}/releases/{$this->version}]
 
-* Site: [{$this->hostname}|{$this->site->getSite()}]
+* Site: [{$this->description}|{$this->site->getSite()}]
 
 * Lumturio: [module overview|https://app.lumturio.com/#/user/site/{$this->site->getId()}/modules]
 EOT;
