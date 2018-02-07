@@ -62,21 +62,33 @@ class SyncCommand extends Command implements CompletionAwareInterface
     {
         $api = new Lumturio();
 
-        $results = $api->getSecurityUpdates();
+        [$insecureSites, $secureSites] = $api->getSecurityUpdates();
 
-        foreach ($results as $site) {
-            if (!$site->isDrupal() || !$site->hasSLA()) {
+        $timestamp = gmdate(DATE_ATOM);
+        foreach ($secureSites as $secureSite) {
+            $this->logLine($output, "{$timestamp} - {$secureSite->getHostname()} - is secure.");
+        }
+
+        foreach ($insecureSites as $insecureSite) {
+            if (!$insecureSite->isDrupal()) {
+                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but is not a Drupal site.");
                 continue;
             }
 
-            $project = $site->getJiraProject();
+            if (!$insecureSite->hasSLA()) {
+                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no SLA.");
+                continue;
+            }
+
+            $project = $insecureSite->getJiraProject();
 
             if (empty($project)) {
+                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no known JIRA project.");
                 continue;
             }
 
-            foreach ($site->getSecurityUpdates() as $update) {
-                $this->processSiteUpdate($site, $project, $update, $input, $output);
+            foreach ($insecureSite->getSecurityUpdates() as $update) {
+                $this->processSiteUpdate($insecureSite, $project, $update, $input, $output);
             };
         }
     }

@@ -30,16 +30,21 @@ class Lumturio
     {
         $result = $this->callApi('/site.getsites');
 
-        $result->securityUpdates = [];
+        $result->secureSites = [];
+        $result->insecureSites = [];
         
         if ($result->ok == true) {
             foreach ($result->items as $item) {
-                if (!empty(((array) $item->list_need_security_update))) {
-                    $result->securityUpdates[] = new LumturioSite($item);
+                $site = new LumturioSite($item);
+                
+                if ($site->isSecure()) {
+                    $result->secureSites[] = $site;
+                } else {
+                    $result->insecureSites[] = $site;
                 }
             }
         }
 
-        return $result->securityUpdates;
+        return [$result->insecureSites, $result->secureSites];
     }
 }

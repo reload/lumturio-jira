@@ -63,6 +63,11 @@ class LumturioSite
         return null;
     }
 
+    public function isSecure() : bool
+    {
+        return empty(((array) $this->data->list_need_security_update));
+    }
+
     public function getSecurityUpdates() : array
     {
         return array_map(function ($update) {
