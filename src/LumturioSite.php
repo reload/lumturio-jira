@@ -55,8 +55,8 @@ class LumturioSite
     public function getJiraProject() : ?string
     {
         foreach ($this->getInfoTags() as $tag) {
-            if (preg_match('/^JIRA:(.+)$/', $tag, $matches)) {
-                return $matches[1];
+            if (preg_match('/^JIRA:(?<projectKey>.+)$/', $tag, $matches)) {
+                return $matches['projectKey'];
             }
         }
 
@@ -66,6 +66,19 @@ class LumturioSite
     public function isSecure() : bool
     {
         return empty(((array) $this->data->list_need_security_update));
+    }
+
+    public function getJiraCC() : array
+    {
+        $cc = [];
+
+        foreach ($this->getInfoTags() as $tag) {
+            if (preg_match('/^JIRACC:(?<jiraUser>.+)$/', $tag, $matches)) {
+                $cc[] = urldecode($matches['jiraUser']);
+            }
+        }
+
+        return $cc;
     }
 
     public function getSecurityUpdates() : array

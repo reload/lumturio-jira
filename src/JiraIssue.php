@@ -5,6 +5,7 @@ namespace LumturioJira;
 use JiraRestApi\Configuration\ArrayConfiguration;
 use JiraRestApi\Issue\IssueField;
 use JiraRestApi\Issue\IssueService;
+use JiraRestApi\Issue\Watcher;
 use JiraRestApi\JiraException;
 
 class JiraIssue
@@ -22,6 +23,8 @@ class JiraIssue
     protected $version;
 
     protected $iss;
+
+    protected $cc;
 
     public function __construct(LumturioSite $site, string $hostname, string $project, string $module, string $version)
     {
@@ -59,6 +62,8 @@ EOT;
 
     public function create() : string
     {
+        $this->cc = $this->site->getJiraCC();
+
         $issueField = new IssueField();
 
         $issueField->setProjectKey($this->project)
@@ -73,6 +78,16 @@ EOT;
 
         $ret = $this->issueService->create($issueField);
 
+        $this->issueService->addComment($ret->key, $this->restrictedComment());
+
+        foreach ($this->cc as $cc) {
+            try {
+                $this->issueService->addWatcher($ret->key, $cc);
+            } catch (\Throwable $t) {
+                echo "Adding {$cc} as watcher to {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+            }
+        }
+
         //If success, Returns a link to the created issue.
         return $ret->key;
     }
@@ -85,13 +100,37 @@ EOT;
     protected function body() : string
     {
         return <<<EOT
-* Drupal project: [{$this->module}|https://drupal.org/project/{$this->module}]
-
-* Security update: [{$this->version}|https://www.drupal.org/project/{$this->module}/releases/{$this->version}]
-
 * Site: [{$this->description}|{$this->site->getSite()}]
-
-* Lumturio: [module overview|https://app.lumturio.com/#/user/site/{$this->site->getId()}/modules]
+* Sikkerhedsopdatering: [{$this->module}|https://drupal.org/project/{$this->module}] version [{$this->version}|https://www.drupal.org/project/{$this->module}/releases/{$this->version}]
 EOT;
     }
+
+    protected function restrictedComment() : array
+    {
+        $cc = $this->formatCC($this->cc);
+
+        return [
+            'visibility' => [
+                'type' => 'role',
+                'value' => 'Developers',
+            ],
+            'body' => <<<EOC
+* Lumturio: [module overview|https://app.lumturio.com/#/user/site/{$this->site->getId()}/modules]
+* [Guide i Confluence|https://reload.atlassian.net/wiki/spaces/RW/pages/89030669/Sikkerhedstriage]
+* [JIRA Security Dashbaord|https://reload.atlassian.net/secure/Dashboard.jspa?selectPageId=12600]
+
+{$cc}
+EOC
+        ];
+    }
+
+    protected function formatCC(array $cc) : string
+    {
+        if (empty($cc)) {
+            return '';
+        }
+
+        return 'Bemærk der er følgende watchers på issuet: [~' . implode('], [~', $this->cc) . '].';
+    }
+
 }
