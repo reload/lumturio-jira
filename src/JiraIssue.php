@@ -75,6 +75,7 @@ EOT;
             ->addLabel($this->label());
 
         unset($issueField->priority);
+        unset($issueField->versions);
 
         try {
             $ret = $this->issueService->create($issueField);
