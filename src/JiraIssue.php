@@ -60,7 +60,7 @@ EOT;
         return null;
     }
 
-    public function create() : string
+    public function create() : ?string
     {
         $this->cc = $this->site->getJiraCC();
 
@@ -76,15 +76,27 @@ EOT;
 
         unset($issueField->priority);
 
-        $ret = $this->issueService->create($issueField);
+        try {
+            $ret = $this->issueService->create($issueField);
+        } catch (\Throwable $t) {
+            echo "Could not create issue {$this->hostname}/{$this->project}:{$this->version}: {$t->getMessage()}" . PHP_EOL;
 
-        $this->issueService->addComment($ret->key, $this->restrictedComment());
+            return null;
+        }
+
+        try {
+            $this->issueService->addComment($ret->key, $this->restrictedComment());
+        } catch (\Throwable $t) {
+            echo "Could add comment to issue {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+        }
 
         foreach ($this->cc as $cc) {
             try {
                 $this->issueService->addWatcher($ret->key, $cc);
             } catch (\Throwable $t) {
                 echo "Adding {$cc} as watcher to {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+
+                return null;
             }
         }
 

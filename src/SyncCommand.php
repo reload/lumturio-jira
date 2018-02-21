@@ -136,6 +136,11 @@ class SyncCommand extends Command implements CompletionAwareInterface
 
         $key = $issue->create();
 
+        // Issue creation failed. Bail out.
+        if (is_null($key)) {
+            return;
+        }
+
         $this->logLine($output, "Created issue {$key}");
     }
 
