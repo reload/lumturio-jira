@@ -41,10 +41,10 @@ class LumturioSite
         return (1 == preg_match('/^DRUPAL/', $this->data->engine_version));
     }
 
-    public function hasSLA() : bool
+    public function hasSecuritySLA() : bool
     {
         foreach ($this->getInfoTags() as $tag) {
-            if ('SLA' == $tag) {
+            if ('SSLA' == $tag) {
                 return true;
             }
         }
