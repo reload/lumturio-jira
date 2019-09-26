@@ -1,0 +1,18 @@
+on: push
+name: Build and test
+jobs:
+  build_and_test:
+    name: Build and test
+    if: '!github.event.deleted'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      uses: actions/docker/cli@master
+      with:
+        args: build -t reload/lumturio-jira:test .
+    - name: Test
+      uses: actions/docker/cli@master
+      with:
+        args: run --rm reload/lumturio-jira:test php /opt/lumturio-jira/lumturio-jira.phar
+          --no-interaction --version
