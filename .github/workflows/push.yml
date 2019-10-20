@@ -8,11 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build
-      uses: actions/docker/cli@master
-      with:
-        args: build -t reload/lumturio-jira:test .
+      run: docker build -t reload/lumturio-jira:test .
     - name: Test
-      uses: actions/docker/cli@master
-      with:
-        args: run --rm reload/lumturio-jira:test php /opt/lumturio-jira/lumturio-jira.phar
+      run: docker run --rm reload/lumturio-jira:test php /opt/lumturio-jira/lumturio-jira.phar
           --no-interaction --version
