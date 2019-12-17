@@ -44,7 +44,7 @@ class LumturioSite
     public function hasSecuritySLA() : bool
     {
         foreach ($this->getInfoTags() as $tag) {
-            if ('SSLA' == $tag) {
+            if ('SLA' == $tag) {
                 return true;
             }
         }
