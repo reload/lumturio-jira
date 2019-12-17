@@ -76,7 +76,7 @@ class SyncCommand extends Command implements CompletionAwareInterface
             }
 
             if (!$insecureSite->hasSecuritySLA()) {
-                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no Security SLA.");
+                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no SLA.");
                 continue;
             }
 
