@@ -3,8 +3,10 @@
 namespace LumturioJira;
 
 use JiraRestApi\Configuration\ArrayConfiguration;
+use JiraRestApi\Issue\Comment;
 use JiraRestApi\Issue\IssueField;
 use JiraRestApi\Issue\IssueService;
+use JiraRestApi\Issue\Visibility;
 use JiraRestApi\Issue\Watcher;
 use JiraRestApi\JiraException;
 
@@ -88,7 +90,7 @@ EOT;
         try {
             $this->issueService->addComment($ret->key, $this->restrictedComment());
         } catch (\Throwable $t) {
-            echo "Could add comment to issue {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+            echo "Could not add comment to issue {$ret->key}: {$t->getMessage()}" . PHP_EOL;
         }
 
         foreach ($this->cc as $cc) {
@@ -118,23 +120,27 @@ EOT;
 EOT;
     }
 
-    protected function restrictedComment() : array
+    protected function restrictedComment() : Comment
     {
         $cc = $this->formatCC($this->cc);
-
-        return [
-            'visibility' => [
-                'type' => 'role',
-                'value' => 'Developers',
-            ],
-            'body' => <<<EOC
+        $body = <<<EOT
 * Lumturio: [module overview|https://app.lumturio.com/#/user/site/{$this->site->getId()}/modules]
 * [Guide i Confluence|https://reload.atlassian.net/wiki/spaces/RW/pages/89030669/Sikkerhedstriage]
 * [JIRA Security Dashbaord|https://reload.atlassian.net/secure/Dashboard.jspa?selectPageId=12600]
 
 {$cc}
-EOC
-        ];
+EOT;
+
+        $comment = new Comment();
+        $comment->setBody($body);
+
+        $visibility = new Visibility();
+        $visibility->setType('role');
+        $visibility->setValue('Developers');
+
+        $comment->visibility = $visibility;
+
+        return $comment;
     }
 
     protected function formatCC(array $cc) : string
