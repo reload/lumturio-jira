@@ -8,22 +8,22 @@
     "packages": [
         {
             "name": "lesstif/php-jira-rest-client",
-            "version": "1.42.0",
+            "version": "1.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lesstif/php-jira-rest-client.git",
-                "reference": "c319cfd46623147776feb974cfbde6bddee316ee"
+                "reference": "fd07dfa55e86b551d5c37c081184a49084844132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/c319cfd46623147776feb974cfbde6bddee316ee",
-                "reference": "c319cfd46623147776feb974cfbde6bddee316ee",
+                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/fd07dfa55e86b551d5c37c081184a49084844132",
+                "reference": "fd07dfa55e86b551d5c37c081184a49084844132",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
-                "monolog/monolog": "~1.12",
+                "monolog/monolog": "~1.12|^2.0",
                 "netresearch/jsonmapper": "~0.11|^1.0",
                 "php": ">=5.6.9",
                 "vlucas/phpdotenv": "~1.0|~2.0|^3.0"
@@ -64,20 +64,20 @@
                 "jira-rest",
                 "rest"
             ],
-            "time": "2019-12-12T04:16:15+00:00"
+            "time": "2020-01-14T09:25:33+00:00"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.25.2",
+            "version": "1.25.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287"
+                "reference": "fa82921994db851a8becaf3787a9e73c5976b6f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
-                "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fa82921994db851a8becaf3787a9e73c5976b6f1",
+                "reference": "fa82921994db851a8becaf3787a9e73c5976b6f1",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2019-11-13T10:00:05+00:00"
+            "time": "2019-12-20T14:15:16+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
