@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LumturioJira;
 
 use JiraRestApi\Configuration\ArrayConfiguration;
@@ -7,8 +9,7 @@ use JiraRestApi\Issue\Comment;
 use JiraRestApi\Issue\IssueField;
 use JiraRestApi\Issue\IssueService;
 use JiraRestApi\Issue\Visibility;
-use JiraRestApi\Issue\Watcher;
-use JiraRestApi\JiraException;
+use Throwable;
 
 class JiraIssue
 {
@@ -28,7 +29,7 @@ class JiraIssue
 
     protected $cc;
 
-    public function __construct(LumturioSite $site, string $hostname, string $project, string $module, string $version)
+    public function __construct(LumturioSite $site, string $hostname, string $project, string $module, ?string $version)
     {
         $this->site = $site;
         $this->hostname = $hostname;
@@ -36,18 +37,18 @@ class JiraIssue
         $this->project = $project;
         $this->module = $module;
         $this->version = $version;
-        $this->issueType = getenv('JIRA_ISSUETYPE') ?: 'Bug';
+        $this->issueType = \getenv('JIRA_ISSUETYPE') ?: 'Bug';
 
         $this->issueService = new IssueService(new ArrayConfiguration(
             array(
-                'jiraHost' => getenv('JIRA_HOST'),
-                'jiraUser' => getenv('JIRA_USER'),
-                'jiraPassword' => getenv('JIRA_PASS'),
-            )
+                'jiraHost' => \getenv('JIRA_HOST'),
+                'jiraUser' => \getenv('JIRA_USER'),
+                'jiraPassword' => \getenv('JIRA_PASS'),
+            ),
         ));
     }
 
-    public function existingIssue() : ?string
+    public function existingIssue(): ?string
     {
         $jql = <<<EOT
 PROJECT = {$this->project} AND labels IN ({$this->label()}) AND labels in ({$this->hostname}) ORDER BY created DESC
@@ -56,13 +57,13 @@ EOT;
         $ret = $this->issueService->search($jql);
 
         if ($ret->total > 0) {
-            return  reset($ret->issues)->key;
+            return  \reset($ret->issues)->key;
         }
 
         return null;
     }
 
-    public function create() : ?string
+    public function create(): ?string
     {
         $this->cc = $this->site->getJiraCC();
 
@@ -81,23 +82,23 @@ EOT;
 
         try {
             $ret = $this->issueService->create($issueField);
-        } catch (\Throwable $t) {
-            echo "Could not create issue {$this->hostname}/{$this->project}:{$this->version}: {$t->getMessage()}" . PHP_EOL;
+        } catch (Throwable $t) {
+            echo "Could not create issue {$this->hostname}/{$this->project}:{$this->version}: {$t->getMessage()}" . \PHP_EOL;
 
             return null;
         }
 
         try {
             $this->issueService->addComment($ret->key, $this->restrictedComment());
-        } catch (\Throwable $t) {
-            echo "Could not add comment to issue {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+        } catch (Throwable $t) {
+            echo "Could not add comment to issue {$ret->key}: {$t->getMessage()}" . \PHP_EOL;
         }
 
         foreach ($this->cc as $cc) {
             try {
                 $this->issueService->addWatcher($ret->key, $cc);
-            } catch (\Throwable $t) {
-                echo "Adding {$cc} as watcher to {$ret->key}: {$t->getMessage()}" . PHP_EOL;
+            } catch (Throwable $t) {
+                echo "Adding {$cc} as watcher to {$ret->key}: {$t->getMessage()}" . \PHP_EOL;
 
                 return null;
             }
@@ -107,12 +108,12 @@ EOT;
         return $ret->key;
     }
 
-    protected function label() : string
+    protected function label(): string
     {
         return "{$this->module}:{$this->version}";
     }
 
-    protected function body() : string
+    protected function body(): string
     {
         return <<<EOT
 * Site: [{$this->description}|{$this->site->getSite()}]
@@ -120,7 +121,7 @@ EOT;
 EOT;
     }
 
-    protected function restrictedComment() : Comment
+    protected function restrictedComment(): Comment
     {
         $cc = $this->formatCC($this->cc);
         $body = <<<EOT
@@ -143,13 +144,12 @@ EOT;
         return $comment;
     }
 
-    protected function formatCC(array $cc) : string
+    protected function formatCC(array $cc): string
     {
         if (empty($cc)) {
             return '';
         }
 
-        return 'Bemærk der er følgende watchers på issuet: [~' . implode('], [~', $this->cc) . '].';
+        return 'Bemærk der er følgende watchers på issuet: [~' . \implode('], [~', $this->cc) . '].';
     }
-
 }

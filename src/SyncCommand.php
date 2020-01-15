@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LumturioJira;
 
-use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionAwareInterface;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 /**
  * The default sync command.
  */
 class SyncCommand extends Command implements CompletionAwareInterface
 {
+
     /**
      * {@inheritDoc}
      */
@@ -24,23 +27,41 @@ class SyncCommand extends Command implements CompletionAwareInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Return possible values for the named option
+     *
+     * @param string $optionName
+     * @param \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context
+     *
+     * @return array<string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      */
-    public function completeOptionValues($optionName, CompletionContext $context)
+    public function completeOptionValues($optionName, CompletionContext $context): array
     {
+        return [];
+    }
+
+    /**
+     * Return possible values for the named argument
+     *
+     * @param string $argumentName
+     * @param \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context
+     *
+     * @return array<string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     */
+    public function completeArgumentValues($argumentName, CompletionContext $context): array
+    {
+        return [];
     }
 
     /**
      * {@inheritDoc}
      */
-    public function completeArgumentValues($argumentName, CompletionContext $context)
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('sync')
@@ -51,46 +72,58 @@ class SyncCommand extends Command implements CompletionAwareInterface
                 null,
                 InputOption::VALUE_NONE,
                 'Do dry run (dont change anything)',
-                null
+                null,
             );
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $api = new Lumturio();
 
         [$insecureSites, $secureSites] = $api->getSecurityUpdates();
 
-        $timestamp = gmdate(DATE_ATOM);
+        $timestamp = \gmdate(\DATE_ATOM);
+
         foreach ($secureSites as $secureSite) {
             $this->logLine($output, "{$timestamp} - {$secureSite->getHostname()} - is secure.");
         }
 
         foreach ($insecureSites as $insecureSite) {
             if (!$insecureSite->isDrupal()) {
-                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but is not a Drupal site.");
+                $this->logLine(
+                    $output,
+                    "{$timestamp} - {$insecureSite->getHostname()} - is insecure but is not a Drupal site.",
+                );
+
                 continue;
             }
 
             if (!$insecureSite->hasSecuritySLA()) {
                 $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no SLA.");
+
                 continue;
             }
 
             $project = $insecureSite->getJiraProject();
 
-            if (empty($project)) {
-                $this->logLine($output, "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no known JIRA project.");
+            if (\is_null($project)) {
+                $this->logLine(
+                    $output,
+                    "{$timestamp} - {$insecureSite->getHostname()} - is insecure but has no known JIRA project.",
+                );
+
                 continue;
             }
 
             foreach ($insecureSite->getSecurityUpdates() as $update) {
                 $this->processSiteUpdate($insecureSite, $project, $update, $input, $output);
-            };
+            }
         }
+
+        return 0;
     }
 
     protected function processSiteUpdate(
@@ -99,7 +132,7 @@ class SyncCommand extends Command implements CompletionAwareInterface
         LumturioUpdate $update,
         InputInterface $input,
         OutputInterface $output
-    ) {
+    ): void {
         $version = $update->getSecureVersion();
 
         $issue = new JiraIssue(
@@ -107,16 +140,16 @@ class SyncCommand extends Command implements CompletionAwareInterface
             $site->getHostname(),
             $project,
             $update->getShortname(),
-            $version
+            $version,
         );
 
-        $timestamp = gmdate(DATE_ATOM);
+        $timestamp = \gmdate(\DATE_ATOM);
 
         $this->log($output, "{$timestamp} - {$site->getHostname()} - {$update->getShortName()}:{$version} - ");
 
         try {
             $key = $issue->existingIssue();
-        } catch (\Throwable $t) {
+        } catch (Throwable $t) {
             $this->logLine($output, "ERROR ACCESSING JIRA: {$t->getMessage()}.");
 
             return;
@@ -137,14 +170,14 @@ class SyncCommand extends Command implements CompletionAwareInterface
         $key = $issue->create();
 
         // Issue creation failed. Bail out.
-        if (is_null($key)) {
+        if (\is_null($key)) {
             return;
         }
 
         $this->logLine($output, "Created issue {$key}");
     }
 
-    protected function log(OutputInterface $output, string $message)
+    protected function log(OutputInterface $output, string $message): void
     {
         if ($output->getVerbosity() < OutputInterface::VERBOSITY_VERBOSE) {
             return;
@@ -153,7 +186,7 @@ class SyncCommand extends Command implements CompletionAwareInterface
         $output->write($message);
     }
 
-    protected function logLine(OutputInterface $output, string $message)
+    protected function logLine(OutputInterface $output, string $message): void
     {
         if ($output->getVerbosity() < OutputInterface::VERBOSITY_VERBOSE) {
             return;

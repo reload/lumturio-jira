@@ -17,7 +17,19 @@
     "bin": [
         "lumturio-jira"
     ],
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/appocular/coding-standard"
+      },
+      {
+        "type": "vcs",
+        "url": "https://github.com/reload/jira-security-issue"
+      }
+    ],
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.0"
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpstan/phpstan": "^0.12.5",
+        "appocular/coding-standard": "^1.0"
     }
 }

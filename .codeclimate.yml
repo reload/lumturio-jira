@@ -12,8 +12,6 @@ engines:
     enabled: true
   phpmd:
     enabled: true
-  phpcodesniffer:
-    enabled: true
   markdownlint:
     enabled: true
   git-legal:
