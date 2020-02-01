@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "lesstif/php-jira-rest-client",
-            "version": "1.43.0",
+            "version": "1.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lesstif/php-jira-rest-client.git",
-                "reference": "fd07dfa55e86b551d5c37c081184a49084844132"
+                "reference": "c05eee2e8d7c460d605d493b9292d179142de74d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/fd07dfa55e86b551d5c37c081184a49084844132",
-                "reference": "fd07dfa55e86b551d5c37c081184a49084844132",
+                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/c05eee2e8d7c460d605d493b9292d179142de74d",
+                "reference": "c05eee2e8d7c460d605d493b9292d179142de74d",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
                 "jira-rest",
                 "rest"
             ],
-            "time": "2020-01-14T09:25:33+00:00"
+            "time": "2020-02-01T12:19:59+00:00"
         },
         {
             "name": "monolog/monolog",
