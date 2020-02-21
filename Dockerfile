@@ -8,7 +8,7 @@ COPY . /opt/lumturio-jira/
 RUN cd /opt/lumturio-jira && composer install --prefer-dist --no-dev
 RUN cd /opt/lumturio-jira && /tmp/vendor/bin/box build -v --no-interaction
 
-FROM php:7.4.2-alpine
+FROM php:7.4.3-alpine
 
 COPY --from=build-env /opt/lumturio-jira/lumturio-jira.phar /opt/lumturio-jira/lumturio-jira.phar
 
