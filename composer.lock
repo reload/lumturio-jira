@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d2db1393fcb2871b2621d2650add2b8",
+    "content-hash": "1e16a0e305dd1fb84b3c6063c956bf7a",
     "packages": [
         {
             "name": "lesstif/php-jira-rest-client",
-            "version": "1.44.0",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lesstif/php-jira-rest-client.git",
-                "reference": "c05eee2e8d7c460d605d493b9292d179142de74d"
+                "reference": "566571cd545976b965819fa89f4ed66e5c47a0c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/c05eee2e8d7c460d605d493b9292d179142de74d",
-                "reference": "c05eee2e8d7c460d605d493b9292d179142de74d",
+                "url": "https://api.github.com/repos/lesstif/php-jira-rest-client/zipball/566571cd545976b965819fa89f4ed66e5c47a0c9",
+                "reference": "566571cd545976b965819fa89f4ed66e5c47a0c9",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "ext-json": "*",
                 "monolog/monolog": "~1.12|^2.0",
                 "netresearch/jsonmapper": "~0.11|^1.0",
-                "php": ">=5.6.9",
+                "php": "^7.1",
                 "vlucas/phpdotenv": "~1.0|~2.0|^3.0"
             },
             "require-dev": {
@@ -64,7 +64,7 @@
                 "jira-rest",
                 "rest"
             ],
-            "time": "2020-02-01T12:19:59+00:00"
+            "time": "2020-02-27T10:51:57+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -464,16 +464,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3"
+                "reference": "fbdeaec0df06cf3d51c93de80c7eb76e271f5a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
-                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/fbdeaec0df06cf3d51c93de80c7eb76e271f5a38",
+                "reference": "fbdeaec0df06cf3d51c93de80c7eb76e271f5a38",
                 "shasum": ""
             },
             "require": {
@@ -485,7 +485,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -518,7 +518,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-11-27T13:56:44+00:00"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
