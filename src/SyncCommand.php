@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LumturioJira;
 
+use Reload\JiraSecurityIssue;
 use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionAwareInterface;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Symfony\Component\Console\Command\Command;
@@ -134,28 +135,42 @@ class SyncCommand extends Command implements CompletionAwareInterface
         OutputInterface $output
     ): void {
         $version = $update->getSecureVersion();
+        $module = $update->getShortname();
+        $description = $site->getDescription() ?: $site->getHostname();
+        $watchers = $site->getJiraWatchers();
 
-        $issue = new JiraIssue(
-            $site,
-            $site->getHostname(),
-            $project,
-            $update->getShortname(),
-            $version,
-        );
+        // phpcs:disable Generic.Files.LineLength.TooLong
+        $body = <<<EOT
+- Site: [{$description}|{$site->getSite()}]
+- Sikkerhedsopdatering: [{$module}|https://drupal.org/project/{$module}] version [{$version}|https://www.drupal.org/project/{$module}/releases/{$version}]
+EOT;
+        // phpcs:enable Generic.Files.LineLength.TooLong
+
+        $issue = (new JiraSecurityIssue())
+               ->setProject($project)
+               ->setKeyLabel($site->getHostname())
+               ->setKeyLabel("{$module}")
+               ->setKeyLabel("{$module}:{$version}")
+               ->setTitle("{$module} ({$version})")
+               ->setBody($body);
+
+        foreach ($watchers as $watcher) {
+            $issue->setWatcher($watcher);
+        }
 
         $timestamp = \gmdate(\DATE_ATOM);
 
         $this->log($output, "{$timestamp} - {$site->getHostname()} - {$update->getShortName()}:{$version} - ");
 
         try {
-            $key = $issue->existingIssue();
+            $key = $issue->exists();
         } catch (Throwable $t) {
             $this->logLine($output, "ERROR ACCESSING JIRA: {$t->getMessage()}.");
 
             return;
         }
 
-        if ($key) {
+        if (\is_string($key)) {
             $this->logLine($output, "Existing issue {$key}.");
 
             return;
@@ -167,14 +182,9 @@ class SyncCommand extends Command implements CompletionAwareInterface
             return;
         }
 
-        $key = $issue->create();
+        $key = $issue->ensure();
 
-        // Issue creation failed. Bail out.
-        if (\is_null($key)) {
-            return;
-        }
-
-        $this->logLine($output, "Created issue {$key}");
+        $this->logLine($output, "Created issue {$key}.");
     }
 
     protected function log(OutputInterface $output, string $message): void

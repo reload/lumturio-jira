@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7814fb21548d0688795e2c90beb09d3b",
+    "content-hash": "6db7efda6a98248a0004c023b810750d",
     "packages": [
         {
             "name": "lesstif/php-jira-rest-client",
@@ -345,6 +345,52 @@
             "time": "2019-11-01T11:05:21+00:00"
         },
         {
+            "name": "reload/jira-security-issue",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reload/jira-security-issue.git",
+                "reference": "c07e4140bbbd383de86ef92bb882c2dc591a2dc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reload/jira-security-issue/zipball/c07e4140bbbd383de86ef92bb882c2dc591a2dc4",
+                "reference": "c07e4140bbbd383de86ef92bb882c2dc591a2dc4",
+                "shasum": ""
+            },
+            "require": {
+                "lesstif/php-jira-rest-client": "^1.42 || ^2.0",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "appocular/coding-standard": "^1.0",
+                "phpstan/phpstan": "^0.12.4",
+                "phpunit/phpunit": "^8.5",
+                "sempro/phpunit-pretty-print": "^1.2",
+                "symfony/console": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Reload\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Reload\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Create Jira issues if it doesn't exist",
+            "support": {
+                "source": "https://github.com/reload/jira-security-issue/tree/master",
+                "issues": "https://github.com/reload/jira-security-issue/issues"
+            },
+            "time": "2020-03-01T15:26:17+00:00"
+        },
+        {
             "name": "stecman/symfony-console-completion",
             "version": "0.11.0",
             "source": {
@@ -391,16 +437,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.4.4",
+            "version": "v4.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f512001679f37e6a042b51897ed24a2f05eba656"
+                "reference": "4fa15ae7be74e53f6ec8c83ed403b97e23b665e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f512001679f37e6a042b51897ed24a2f05eba656",
-                "reference": "f512001679f37e6a042b51897ed24a2f05eba656",
+                "url": "https://api.github.com/repos/symfony/console/zipball/4fa15ae7be74e53f6ec8c83ed403b97e23b665e9",
+                "reference": "4fa15ae7be74e53f6ec8c83ed403b97e23b665e9",
                 "shasum": ""
             },
             "require": {
@@ -463,7 +509,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-25T12:44:29+00:00"
+            "time": "2020-02-24T13:10:00+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -525,16 +571,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f"
+                "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7b4aab9743c30be783b73de055d24a39cf4b954f",
-                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/34094cfa9abe1f0f14f48f490772db7a775559f2",
+                "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2",
                 "shasum": ""
             },
             "require": {
@@ -546,7 +592,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -580,20 +626,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-11-27T14:18:11+00:00"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
-            "version": "v1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "4b0e2222c55a25b4541305a053013d5647d3a25f"
+                "reference": "5e66a0fa1070bf46bec4bea7962d285108edd675"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/4b0e2222c55a25b4541305a053013d5647d3a25f",
-                "reference": "4b0e2222c55a25b4541305a053013d5647d3a25f",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/5e66a0fa1070bf46bec4bea7962d285108edd675",
+                "reference": "5e66a0fa1070bf46bec4bea7962d285108edd675",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +648,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -638,7 +684,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-11-27T16:25:15+00:00"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -851,16 +897,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.5",
+            "version": "0.12.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "71a20c18f06c53605251a00a8efe443fa85225d1"
+                "reference": "ca5f2b7cf81c6d8fba74f9576970399c5817e03b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/71a20c18f06c53605251a00a8efe443fa85225d1",
-                "reference": "71a20c18f06c53605251a00a8efe443fa85225d1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ca5f2b7cf81c6d8fba74f9576970399c5817e03b",
+                "reference": "ca5f2b7cf81c6d8fba74f9576970399c5817e03b",
                 "shasum": ""
             },
             "require": {
@@ -886,7 +932,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-01-12T14:31:21+00:00"
+            "time": "2020-02-16T14:00:29+00:00"
         },
         {
             "name": "slevomat/coding-standard",
@@ -982,7 +1028,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "reload/jira-security-issue": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

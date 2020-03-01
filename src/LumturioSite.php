@@ -80,19 +80,19 @@ class LumturioSite
     /**
      * @return array<string>
      */
-    public function getJiraCC(): array
+    public function getJiraWatchers(): array
     {
-        $cc = [];
+        $watchers = [];
 
         foreach ($this->getInfoTags() as $tag) {
-            if (!\preg_match('/^JIRACC:(?<jiraUser>.+)$/', $tag, $matches)) {
+            if (!\preg_match('/^JIRA_WATCHERS?:(?<jiraUser>.+)$/', $tag, $matches)) {
                 continue;
             }
 
-            $cc[] = \urldecode($matches['jiraUser']);
+            $watchers[] = \urldecode($matches['jiraUser']);
         }
 
-        return $cc;
+        return $watchers;
     }
 
     /**
