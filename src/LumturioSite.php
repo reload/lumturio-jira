@@ -1,50 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LumturioJira;
+
+use stdClass;
 
 class LumturioSite
 {
-    protected $data;
+    protected stdClass $data;
 
-    public function __construct(\stdClass $data)
+    public function __construct(stdClass $data)
     {
         $this->data = $data;
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->data->id;
     }
 
-    public function getSite() : string
+    public function getSite(): string
     {
         return $this->data->site_url;
     }
 
-    public function getHostname() : string
+    public function getHostname(): string
     {
         return $this->data->site_hostname;
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->data->info_description;
     }
 
-    public function getInfoTags() : array
+    /**
+     * @return array<string>
+     */
+    public function getInfoTags(): array
     {
-        return array_map('trim', (array) $this->data->info_tags);
+        return \array_map('trim', (array) $this->data->info_tags);
     }
 
-    public function isDrupal() : bool
+    public function isDrupal(): bool
     {
-        return (1 == preg_match('/^DRUPAL/', $this->data->engine_version));
+        return \preg_match('/^DRUPAL/', $this->data->engine_version) === 1;
     }
 
-    public function hasSecuritySLA() : bool
+    public function hasSecuritySLA(): bool
     {
         foreach ($this->getInfoTags() as $tag) {
-            if ('SLA' == $tag) {
+            if ($tag === 'SLA') {
                 return true;
             }
         }
@@ -52,10 +59,10 @@ class LumturioSite
         return false;
     }
 
-    public function getJiraProject() : ?string
+    public function getJiraProject(): ?string
     {
         foreach ($this->getInfoTags() as $tag) {
-            if (preg_match('/^JIRA:(?<projectKey>.+)$/', $tag, $matches)) {
+            if (\preg_match('/^JIRA:(?<projectKey>.+)$/', $tag, $matches)) {
                 return $matches['projectKey'];
             }
         }
@@ -63,27 +70,37 @@ class LumturioSite
         return null;
     }
 
-    public function isSecure() : bool
+    public function isSecure(): bool
     {
-        return empty(((array) $this->data->list_need_security_update));
+        $insecure = (array) $this->data->list_need_security_update;
+
+        return \count($insecure) === 0;
     }
 
-    public function getJiraCC() : array
+    /**
+     * @return array<string>
+     */
+    public function getJiraWatchers(): array
     {
-        $cc = [];
+        $watchers = [];
 
         foreach ($this->getInfoTags() as $tag) {
-            if (preg_match('/^JIRACC:(?<jiraUser>.+)$/', $tag, $matches)) {
-                $cc[] = urldecode($matches['jiraUser']);
+            if (!\preg_match('/^JIRA_WATCHERS?:(?<jiraUser>.+)$/', $tag, $matches)) {
+                continue;
             }
+
+            $watchers[] = \urldecode($matches['jiraUser']);
         }
 
-        return $cc;
+        return $watchers;
     }
 
-    public function getSecurityUpdates() : array
+    /**
+     * @return array<\LumturioJira\LumturioUpdate>
+     */
+    public function getSecurityUpdates(): array
     {
-        return array_map(function ($update) {
+        return \array_map(static function ($update) {
             return new LumturioUpdate($update);
         }, (array) $this->data->list_need_security_update);
     }
