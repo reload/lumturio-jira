@@ -10,8 +10,6 @@ engines:
       - php
   fixme:
     enabled: true
-  phpmd:
-    enabled: true
   markdownlint:
     enabled: true
   git-legal:
