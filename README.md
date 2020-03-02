@@ -5,7 +5,7 @@ values:
 
 * `JIRA_HOST`
 * `JIRA_USER`
-* `JIRA_PASS`
+* `JIRA_TOKEN`
 * `LUMTURIO_TOKEN`
 
 Optionally specify issue type to create in Jira (defaults to `Bug`):
