@@ -10,7 +10,7 @@ values:
 
 Optionally specify issue type to create in Jira (defaults to `Bug`):
 
-* `JIRA_ISSUETYPE`
+* `JIRA_ISSUE_TYPE`
 
 It will process sites in Lumturio tagged with `SLA` and with a
 `JIRA:XX` tag where `XX` is the Jira project to create issues in for
