@@ -1,12 +1,12 @@
 .PHONY: check phpstan phpcs markdownlint hadolint
 
-check: phpstan phpcs markdownlint
+check: phpstan phpcs markdownlint hadolint
 
 phpstan:
-	-vendor/bin/phpstan analyse .
+	-vendor/bin/phpstan analyse
 
 phpcs:
-	-vendor/bin/phpcs -s bin/ src/ tests/
+	-vendor/bin/phpcs -s
 
 markdownlint:
 	-mdl *.md
