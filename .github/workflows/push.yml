@@ -6,7 +6,7 @@ jobs:
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2.3.0
     - name: Build
       run: docker build -t reload/lumturio-jira:test .
     - name: Test
