@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4500c83ad21c2f001957f2d636967dc4",
+    "content-hash": "90d635aa396765d8946fd3817ae50e43",
     "packages": [
         {
             "name": "lesstif/php-jira-rest-client",
@@ -346,16 +346,16 @@
         },
         {
             "name": "reload/jira-security-issue",
-            "version": "dev-master",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reload/jira-security-issue.git",
-                "reference": "f8c2ba2b98074530c6d35d4f72eac96221645111"
+                "reference": "d38c97cf956c4ba5d5f6d8b88bcf7a23f8b553c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reload/jira-security-issue/zipball/f8c2ba2b98074530c6d35d4f72eac96221645111",
-                "reference": "f8c2ba2b98074530c6d35d4f72eac96221645111",
+                "url": "https://api.github.com/repos/reload/jira-security-issue/zipball/d38c97cf956c4ba5d5f6d8b88bcf7a23f8b553c1",
+                "reference": "d38c97cf956c4ba5d5f6d8b88bcf7a23f8b553c1",
                 "shasum": ""
             },
             "require": {
@@ -381,7 +381,7 @@
                 "MIT"
             ],
             "description": "Create Jira issues if it doesn't exist",
-            "time": "2020-03-19T08:31:48+00:00"
+            "time": "2020-10-07T04:03:45+00:00"
         },
         {
             "name": "stecman/symfony-console-completion",
@@ -1250,9 +1250,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "reload/jira-security-issue": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

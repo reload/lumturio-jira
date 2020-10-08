@@ -7,7 +7,7 @@
         "php": ">=7.1.0",
         "symfony/console": "^4.1",
         "stecman/symfony-console-completion": "^0.11.0",
-        "reload/jira-security-issue": "dev-master"
+        "reload/jira-security-issue": "^1.0"
     },
     "autoload": {
         "psr-4": {
