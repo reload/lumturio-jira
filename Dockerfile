@@ -10,7 +10,7 @@ WORKDIR /opt/lumturio-jira
 RUN composer install --prefer-dist --no-dev
 RUN /tmp/vendor/bin/box build -v --no-interaction
 
-FROM php:7.4.12-alpine
+FROM php:8.0.0-alpine
 
 COPY --from=build-env /opt/lumturio-jira/lumturio-jira.phar /opt/lumturio-jira/lumturio-jira.phar
 
