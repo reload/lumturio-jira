@@ -7,8 +7,8 @@ updates:
     time: '04:00'
     timezone: Europe/Copenhagen
   open-pull-requests-limit: 10
-  assignees:
-  - arnested
+  reviewers:
+  - "reload/developers"
 - package-ecosystem: docker
   directory: "/"
   schedule:
@@ -16,8 +16,8 @@ updates:
     time: '04:00'
     timezone: Europe/Copenhagen
   open-pull-requests-limit: 10
-  assignees:
-  - arnested
+  reviewers:
+  - "reload/developers"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
@@ -25,5 +25,5 @@ updates:
     time: '04:00'
     timezone: Europe/Copenhagen
   open-pull-requests-limit: 10
-  assignees:
-  - arnested
+  reviewers:
+  - "reload/developers"
