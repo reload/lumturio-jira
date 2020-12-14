@@ -17,12 +17,6 @@
     "bin": [
         "lumturio-jira"
     ],
-    "repositories": [
-      {
-        "type": "vcs",
-        "url": "https://github.com/appocular/coding-standard"
-      }
-    ],
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",
         "phpstan/phpstan": "^0.12.5",
