@@ -1115,28 +1115,24 @@
     "packages-dev": [
         {
             "name": "appocular/coding-standard",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/appocular/coding-standard.git",
-                "reference": "84cc48dc7552b8452e44189860e9db7ea5c4fd85"
+                "reference": "3d8d10a692682fe389095da88c2cab1b6b009761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/appocular/coding-standard/zipball/84cc48dc7552b8452e44189860e9db7ea5c4fd85",
-                "reference": "84cc48dc7552b8452e44189860e9db7ea5c4fd85",
+                "url": "https://api.github.com/repos/appocular/coding-standard/zipball/3d8d10a692682fe389095da88c2cab1b6b009761",
+                "reference": "3d8d10a692682fe389095da88c2cab1b6b009761",
                 "shasum": ""
             },
             "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
                 "slevomat/coding-standard": "^5.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "Appocular\\CodingStandard\\": "AppocularCodingStandard"
-                }
-            },
+            "type": "phpcodesniffer-standard",
             "license": [
                 "MIT"
             ],
@@ -1153,10 +1149,76 @@
                 "standard"
             ],
             "support": {
-                "source": "https://github.com/appocular/coding-standard/tree/1.0.3",
+                "source": "https://github.com/appocular/coding-standard/tree/1.1.0",
                 "issues": "https://github.com/appocular/coding-standard/issues"
             },
-            "time": "2019-11-17T18:59:56+00:00"
+            "time": "2020-12-13T21:46:52+00:00"
+        },
+        {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "composer/composer": "*",
+                "phpcompatibility/php-compatibility": "^9.0",
+                "sensiolabs/security-checker": "^4.1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "franck.nijhof@dealerdirect.com",
+                    "homepage": "http://www.frenck.nl",
+                    "role": "Developer / IT Manager"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://www.dealerdirect.com",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "time": "2020-12-07T18:04:37+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
