@@ -1,4 +1,4 @@
-FROM composer:2.0.8 AS build-env
+FROM composer:2.0.9 AS build-env
 
 RUN echo "phar.readonly=false" > "$PHP_INI_DIR/conf.d/phar-not-readonly.ini"
 RUN composer global require kherge/box --prefer-dist --update-no-dev
