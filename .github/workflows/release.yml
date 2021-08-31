@@ -5,7 +5,7 @@ on:
     types:
       - completed
 
-name: Docker build and push
+name: Release
 jobs:
   release:
     name: Release
