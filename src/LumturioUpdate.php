@@ -24,7 +24,13 @@ class LumturioUpdate
 
     public function getSecureVersion(): ?string
     {
-        foreach ($this->getDrupalUpdates()->releases->release as $release) {
+        $releases = $this->getDrupalUpdates()->releases->release;
+
+        if (!$releases instanceof SimpleXMLElement) {
+            return null;
+        }
+
+        foreach ($releases as $release) {
             if (\count($release->terms) === 0) {
                 continue;
             }
