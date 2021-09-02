@@ -1,14 +1,14 @@
 FROM composer:2.1.6 AS build-env
 
-RUN echo "phar.readonly=false" > "$PHP_INI_DIR/conf.d/phar-not-readonly.ini"
-RUN composer global require kherge/box --prefer-dist --update-no-dev
+RUN echo "phar.readonly=false" > "$PHP_INI_DIR/conf.d/phar-not-readonly.ini" && \
+    composer global require kherge/box --prefer-dist --update-no-dev
 
 COPY . /opt/lumturio-jira/
 
 WORKDIR /opt/lumturio-jira
 
-RUN composer install --prefer-dist --no-dev
-RUN /tmp/vendor/bin/box build -v --no-interaction
+RUN composer install --prefer-dist --no-dev && \
+    /tmp/vendor/bin/box build -v --no-interaction
 
 FROM php:7.4.23-alpine
 
