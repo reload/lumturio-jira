@@ -1,16 +1,17 @@
 FROM composer:2.1.12 AS build-env
 
 RUN echo "phar.readonly=false" > "$PHP_INI_DIR/conf.d/phar-not-readonly.ini" && \
-    composer global require kherge/box --prefer-dist --update-no-dev
+    curl -sSLo /usr/local/bin/box https://github.com/box-project/box/releases/latest/download/box.phar && \
+    chmod +x /usr/local/bin/box
 
 COPY . /opt/lumturio-jira/
 
 WORKDIR /opt/lumturio-jira
 
 RUN composer install --prefer-dist --no-dev && \
-    /tmp/vendor/bin/box build -v --no-interaction
+    /usr/local/bin/box build -v --no-interaction
 
-FROM php:7.4.25-alpine
+FROM php:8.0.13-alpine
 
 COPY --from=build-env /opt/lumturio-jira/lumturio-jira.phar /opt/lumturio-jira/lumturio-jira.phar
 
