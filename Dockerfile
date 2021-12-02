@@ -1,4 +1,4 @@
-FROM composer:2.1.12 AS build-env
+FROM composer:2.1.14 AS build-env
 
 RUN echo "phar.readonly=false" > "$PHP_INI_DIR/conf.d/phar-not-readonly.ini" && \
     curl -sSLo /usr/local/bin/box https://github.com/box-project/box/releases/latest/download/box.phar && \
