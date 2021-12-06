@@ -10,11 +10,8 @@ use stdClass;
 
 class LumturioUpdate
 {
-    protected stdClass $data;
-
-    public function __construct(stdClass $data)
+    public function __construct(protected stdClass $data)
     {
-        $this->data = $data;
     }
 
     public function getShortName(): string
@@ -31,7 +28,7 @@ class LumturioUpdate
         }
 
         foreach ($releases as $release) {
-            if (\count($release->terms) === 0) {
+            if (\count($release->terms) === 0 || !$release->terms[0] instanceof SimpleXMLElement) {
                 continue;
             }
 
@@ -40,7 +37,7 @@ class LumturioUpdate
                     ($term->name->__toString() === 'Release type') &&
                     ($term->value->__toString() === 'Security update')
                 ) {
-                    return \reset($release->version);
+                    return (string) $release->version;
                 }
             }
         }
@@ -50,7 +47,13 @@ class LumturioUpdate
 
     protected function getMajorVersion(): string
     {
-        return \preg_filter('/^([0-9]+)\..*/', '\1', $this->data->current_version);
+        $majorVersion = \preg_filter('/^([0-9]+)\..*/', '\1', $this->data->current_version);
+
+        if (!\is_string($majorVersion)) {
+            throw new RuntimeException('Cound not parse current major version.');
+        }
+
+        return $majorVersion;
     }
 
     protected function getDrupalUpdates(): SimpleXMLElement

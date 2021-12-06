@@ -10,5 +10,5 @@ jobs:
     - name: Build
       run: docker build -t reload/lumturio-jira:test .
     - name: Test
-      run: docker run --rm reload/lumturio-jira:test php /opt/lumturio-jira/lumturio-jira.phar
+      run: docker run --rm reload/lumturio-jira:test php /opt/lumturio-jira/bin/lumturio-jira
           --no-interaction --version
