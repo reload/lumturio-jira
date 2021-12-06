@@ -8,11 +8,8 @@ use stdClass;
 
 class LumturioSite
 {
-    protected stdClass $data;
-
-    public function __construct(stdClass $data)
+    public function __construct(protected stdClass $data)
     {
-        $this->data = $data;
     }
 
     public function getId(): string
@@ -35,9 +32,7 @@ class LumturioSite
         return $this->data->info_description;
     }
 
-    /**
-     * @return array<string>
-     */
+    /** @return array<string> */
     public function getInfoTags(): array
     {
         return \array_map('trim', (array) $this->data->info_tags);
@@ -77,9 +72,7 @@ class LumturioSite
         return \count($insecure) === 0;
     }
 
-    /**
-     * @return array<string>
-     */
+    /** @return array<string> */
     public function getJiraWatchers(): array
     {
         $watchers = [];
@@ -95,13 +88,12 @@ class LumturioSite
         return $watchers;
     }
 
-    /**
-     * @return array<\LumturioJira\LumturioUpdate>
-     */
+    /** @return array<\LumturioJira\LumturioUpdate> */
     public function getSecurityUpdates(): array
     {
-        return \array_map(static function ($update) {
-            return new LumturioUpdate($update);
-        }, (array) $this->data->list_need_security_update);
+        return \array_map(
+            static fn ($update) => new LumturioUpdate($update),
+            (array) $this->data->list_need_security_update,
+        );
     }
 }
