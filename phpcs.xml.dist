@@ -3,5 +3,15 @@
     <file>./bin</file>
     <file>./src</file>
     <file>./tests</file>
-    <rule ref="PSR12"/>
+    <rule ref="AppocularCodingStandard"/>
+    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+      <properties>
+        <!-- Tell Slevomat the root directories of our namespaces, so
+             it can check if the filepath is correct. -->
+      <property name="rootNamespaces" type="array">
+        <element key="src" value="LumturioJira"/>
+        <element key="tests" value="LumturioJira"/>
+      </property>
+      </properties>
+    </rule>
 </ruleset>
