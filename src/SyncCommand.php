@@ -31,12 +31,11 @@ class SyncCommand extends Command implements CompletionAwareInterface
      * Return possible values for the named option
      *
      * @param string $optionName
-     * @param \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context
      *
      * @return array<string>
      *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function completeOptionValues($optionName, CompletionContext $context): array
     {
@@ -47,12 +46,11 @@ class SyncCommand extends Command implements CompletionAwareInterface
      * Return possible values for the named argument
      *
      * @param string $argumentName
-     * @param \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context
      *
      * @return array<string>
      *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function completeArgumentValues($argumentName, CompletionContext $context): array
     {
@@ -68,13 +66,7 @@ class SyncCommand extends Command implements CompletionAwareInterface
             ->setName('sync')
             ->setDescription('Sync Lumturio status to Jira')
             ->setHelp('This command allows you to synchronize the security status from Lumturio to Jira.')
-            ->addOption(
-                'dry-run',
-                null,
-                InputOption::VALUE_NONE,
-                'Do dry run (dont change anything)',
-                null,
-            );
+            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do dry run (dont change anything)', null);
     }
 
     /**
@@ -132,27 +124,27 @@ class SyncCommand extends Command implements CompletionAwareInterface
         string $project,
         LumturioUpdate $update,
         InputInterface $input,
-        OutputInterface $output
+        OutputInterface $output,
     ): void {
         $version = $update->getSecureVersion();
         $module = $update->getShortname();
         $description = $site->getDescription() ?: $site->getHostname();
         $watchers = $site->getJiraWatchers();
 
-        // phpcs:disable Generic.Files.LineLength.TooLong
+        // phpcs:disable SlevomatCodingStandard.Files.LineLength.LineTooLong, Generic.Files.LineLength.TooLong
         $body = <<<EOT
 - Site: [{$description}|{$site->getSite()}]
 - Sikkerhedsopdatering: [{$module}|https://drupal.org/project/{$module}] version [{$version}|https://www.drupal.org/project/{$module}/releases/{$version}]
 EOT;
-        // phpcs:enable Generic.Files.LineLength.TooLong
+        // phpcs:enable SlevomatCodingStandard.Files.LineLength.LineTooLong, Generic.Files.LineLength.TooLong
 
         $issue = (new JiraSecurityIssue())
-               ->setProject($project)
-               ->setKeyLabel($site->getHostname())
-               ->setKeyLabel("{$module}")
-               ->setKeyLabel("{$module}:{$version}")
-               ->setTitle("{$module} ({$version})")
-               ->setBody($body);
+            ->setProject($project)
+            ->setKeyLabel($site->getHostname())
+            ->setKeyLabel("{$module}")
+            ->setKeyLabel("{$module}:{$version}")
+            ->setTitle("{$module} ({$version})")
+            ->setBody($body);
 
         foreach ($watchers as $watcher) {
             $issue->setWatcher($watcher);

@@ -28,6 +28,7 @@
         "lumturio-jira"
     ],
     "require-dev": {
+        "appocular/coding-standard": "^2.1",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.2",
         "phpstan/phpstan-deprecation-rules": "^1.0",
