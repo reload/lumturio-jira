@@ -13,7 +13,7 @@ COPY --from=build-env /opt/lumturio-jira /opt/lumturio-jira
 RUN apk add --no-cache tini=0.19.0-r0
 
 # hadolint ignore=DL4006,SC2016
-RUN crontab -l | { cat; echo '*/10    *       *       *       *       eval $(printenv | grep -E "^(JIRA|LUMTURIO)_" | sed "s/^\(.*\)$/export \1/g"); /opt/lumturio-jira/lumturio-jira.phar --verbose'; } | crontab -
+RUN crontab -l | { cat; echo '*/10    *       *       *       *       eval $(printenv | grep -E "^(JIRA|LUMTURIO)_" | sed "s/^\(.*\)$/export \1/g"); /opt/lumturio-jira/bin/lumturio-jira --verbose'; } | crontab -
 
 # Run the command just to make sure we can.
 RUN /opt/lumturio-jira/bin/lumturio-jira --help
